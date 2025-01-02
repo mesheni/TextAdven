@@ -1,4 +1,6 @@
-﻿using TextAdven.PlayChar;
+﻿using Pastel;
+using System.Drawing;
+using TextAdven.PlayChar;
 
 namespace TextAdven.Logic
 {
@@ -15,7 +17,7 @@ namespace TextAdven.Logic
             // Добавьте другие локации здесь
 
             // Добавление персонажей
-            Character oldMan = new Character("Старик", "Приветствую, путник. Куда путь держишь?");
+            Character oldMan = new Character($"{"Старик".Pastel(Color.FromArgb(165, 229, 250))}", "Приветствую, путник. Куда путь держишь?");
             oldMan.Responses.Add("В лес", "Осторожнее там, говорят, в лесу водятся волки.");
             oldMan.Responses.Add("Не знаю", "Хм, странно...");
             Locations["начало"].Characters.Add(oldMan);

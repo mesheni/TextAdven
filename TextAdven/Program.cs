@@ -1,6 +1,8 @@
 ﻿namespace TextAdven
 {
+    using Pastel;
     using System;
+    using System.Drawing;
     using System.IO;
     using System.Xml.Serialization;
     using TextAdven.Logic;
@@ -12,7 +14,7 @@
         {
             // Начальное сообщение
             Console.WriteLine("Добро пожаловать в текстовое приключение!");
-            Console.WriteLine("Напишите 'помощь', чтобы увидеть список доступных команд.");
+            Console.WriteLine($"Напишите {"помощь".Pastel(Color.Aqua)}, чтобы увидеть список доступных команд.");
 
             // Инициализация игрока и мира
             Player player = LoadGame() ?? new Player(); // Загрузка или создание нового игрока
@@ -42,7 +44,7 @@
                 else if (input.StartsWith("говорить "))
                 {
                     string characterName = input.Substring(8).Trim();
-                    Character character = world.Locations[player.CurrentLocation].Characters.FirstOrDefault(c => c.Name.ToLower() == characterName.ToLower());
+                    Character character = world.Locations[player.CurrentLocation].Characters.FirstOrDefault(c => c.Name.ToLower().Contains(characterName.ToLower()));
                     if (character != null)
                     {
                         character.Talk();
@@ -78,14 +80,14 @@
         static void ShowHelp()
         {
             Console.WriteLine("Доступные команды:");
-            Console.WriteLine("  помощь - показать этот список команд");
-            Console.WriteLine("  осмотреться - осмотреть текущую локацию");
-            Console.WriteLine("  идти <направление> - перейти в другую локацию");
-            Console.WriteLine("  говорить <персонаж> - поговорить с персонажем");
-            Console.WriteLine("  инвентарь - посмотреть содержимое инвентаря");
-            Console.WriteLine("  сохранить - сохранить текущую игру");
+            Console.WriteLine($"  {"помощь".Pastel(Color.Aqua)} - показать этот список команд");
+            Console.WriteLine($"  {"осмотреться".Pastel(Color.Aqua)} - осмотреть текущую локацию");
+            Console.WriteLine($"  {"идти".Pastel(Color.Aqua)} {"<направление>".Pastel(Color.Bisque)} - перейти в другую локацию");
+            Console.WriteLine($"  {"говорить".Pastel(Color.Aqua)} {"<персонаж>".Pastel(Color.Bisque)} - поговорить с персонажем");
+            Console.WriteLine($"  {"инвентарь".Pastel(Color.Aqua)} - посмотреть содержимое инвентаря");
+            Console.WriteLine($"  {"сохранить".Pastel(Color.Aqua)} - сохранить текущую игру");
+            Console.WriteLine($"  {"выход".Pastel(Color.Aqua)} - завершить игру");
             // Добавьте описание других команд здесь
-            Console.WriteLine("  выход - завершить игру");
         }
 
         static void SaveGame(Player player, string filename = "savegame.xml")
