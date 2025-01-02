@@ -1,4 +1,4 @@
-﻿namespace TextAdven.Character
+﻿namespace TextAdven.PlayChar
 {
     [Serializable]
     public class Player

@@ -3,11 +3,8 @@
     using System;
     using System.IO;
     using System.Xml.Serialization;
-    using TextAdven.Character;
     using TextAdven.Logic;
-
-
-
+    using TextAdven.PlayChar;
 
     public class Program
     {
@@ -42,6 +39,19 @@
                     string direction = input.Substring(4).Trim(); // Удаление лишних пробелов
                     world.Move(player, direction);
                 }
+                else if (input.StartsWith("говорить "))
+                {
+                    string characterName = input.Substring(8).Trim();
+                    Character character = world.Locations[player.CurrentLocation].Characters.FirstOrDefault(c => c.Name.ToLower() == characterName.ToLower());
+                    if (character != null)
+                    {
+                        character.Talk();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Здесь нет такого персонажа.");
+                    }
+                }
                 else if (input == "инвентарь")
                 {
                     player.ShowInventory();
@@ -71,6 +81,7 @@
             Console.WriteLine("  помощь - показать этот список команд");
             Console.WriteLine("  осмотреться - осмотреть текущую локацию");
             Console.WriteLine("  идти <направление> - перейти в другую локацию");
+            Console.WriteLine("  говорить <персонаж> - поговорить с персонажем");
             Console.WriteLine("  инвентарь - посмотреть содержимое инвентаря");
             Console.WriteLine("  сохранить - сохранить текущую игру");
             // Добавьте описание других команд здесь

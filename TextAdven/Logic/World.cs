@@ -1,18 +1,24 @@
-﻿using TextAdven.Character;
+﻿using TextAdven.PlayChar;
 
 namespace TextAdven.Logic
 {
     public class World
     {
-        public Dictionary<string, Locations> Locations { get; set; } = new Dictionary<string, Locations>();
+        public Dictionary<string, Location> Locations { get; set; } = new Dictionary<string, Location>();
 
         public World()
         {
             // Инициализация локаций
-            Locations.Add("начало", new Locations("Вы находитесь в начале...", new Dictionary<string, string>() { { "север", "лес" } }));
-            Locations.Add("лес", new Locations("Вы в темном лесу...", new Dictionary<string, string>() { { "юг", "начало" }, { "восток", "пещера" } }));
-            Locations.Add("пещера", new Locations("Вы в сырой пещере...", new Dictionary<string, string>() { { "запад", "лес" } }));
+            Locations.Add("начало", new Location("Вы находитесь в начале...", new Dictionary<string, string>() { { "север", "лес" } }));
+            Locations.Add("лес", new Location("Вы в темном лесу...", new Dictionary<string, string>() { { "юг", "начало" }, { "восток", "пещера" } }));
+            Locations.Add("пещера", new Location("Вы в сырой пещере...", new Dictionary<string, string>() { { "запад", "лес" } }));
             // Добавьте другие локации здесь
+
+            // Добавление персонажей
+            Character oldMan = new Character("Старик", "Приветствую, путник. Куда путь держишь?");
+            oldMan.Responses.Add("В лес", "Осторожнее там, говорят, в лесу водятся волки.");
+            oldMan.Responses.Add("Не знаю", "Хм, странно...");
+            Locations["начало"].Characters.Add(oldMan);
         }
 
         public void LookAround(string locationName)
@@ -21,6 +27,7 @@ namespace TextAdven.Logic
             {
                 Console.WriteLine(Locations[locationName].Description);
                 ShowExits(locationName);
+                Locations[locationName].ShowCharacters(); // Показать персонажей
             }
             else
             {
